@@ -7,14 +7,14 @@ const UserSchema = mongoose.Schema({
   password: { type: String, required: [true, "please enter a password"] }
 }, { timestamps: true });
 
-// Hash password avant save (Mongoose 9+)
+// Hash password avant save 
 UserSchema.pre("save", async function() {
   if (!this.isModified("password")) return;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Comparer le mot de passe
+// Comparer le mot de passe entré avec un pwd hashé en base return true/false
 UserSchema.methods.matchPassword = async function(enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

@@ -1,4 +1,3 @@
-// controllers/auth.controller.js
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
@@ -15,7 +14,7 @@ const registerUser = async (req, res) => {
     if (userExists) return res.status(400).json({ message: "User already exists" });
 
     const user = new User({ name, email, password });
-    await user.save(); // pré-hook bcrypt fonction
+    await user.save(); 
 
     res.status(201).json({
       _id: user._id,
